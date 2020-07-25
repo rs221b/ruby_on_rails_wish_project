@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#submitBtn").click(function(e){
+                var name = $("#nameBox").val().trim()
+                var contact = $("#contactBox").val().trim()
+                var wish = $("#wishBox").val().trim()
+                if(name == '' || contact == '' || wish == '')
+                {
+                    alert("Enter all fields")
+                    return
+                }
+                data = {name: name, contact: contact, wish: wish}
+                
+                $.ajax({
+                    url: '/login/start',
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data) {
+                    alert("#" + data["count"] + ' ' + data["name"] + ", be optimistic. ");
+                    document.getElementById("wishBox").value="";
+                    document.getElementById("nameBox").value="";
+                    document.getElementById("contactBox").value="";
+                    },
+                    error: function(data) {
+                        alert('Submit Again.')
+                    }
+                });
+
+            });
+        });
+
+    </script>
+    </head>
+
+    <body>
+    
+    <h6> Thinking what should you write?<br>
+    Ans: Whatever. Your Wish :) 
+    </h6>
+    
+    <div class="col-md-2">
+        <textarea placeholder="Full Name" id="nameBox" ></textarea>
+    </div>
+    <div class="col-md-2">
+        <textarea placeholder="Contact" id="contactBox" ></textarea>
+    </div>
+    <div class="col-md-2">
+        <textarea placeholder="Make a Wish" id="wishBox" style="height:100px"></textarea>
+    </div>
+    <div class="col-md-1">
+        <button type="submit" value="Submit" id="submitBtn" >Submit</button>
+    </div>
+
+    </body>
+
+    
+    </html>
+
